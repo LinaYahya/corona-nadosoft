@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { SideBar, TableOfCountries, Pagination, Spinner } from './components';
-import getCovidSummary from './helpers/api';
+import { SideBar, TableOfCountries, Pagination, Spinner, GeneralInfo } from './components';
+import { getCovidSummary } from './helpers/api';
 import './App.css';
 
 const ROWS_PER_PAGE = 12;
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [globalStatistics, setGlobalStatistics] = useState(null)
   const [totalPages, seTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false);
@@ -16,8 +17,9 @@ function App() {
     const getData = async () => {
       try {
         setLoading(true)
-        const { Countries } = await getCovidSummary();
-        console.log(Countries);
+        const { Countries, Global } = await getCovidSummary();
+        console.log(Global);
+        setGlobalStatistics(Global);
         seTotalPages(Math.ceil(Countries.length / ROWS_PER_PAGE))
         setCountries(Countries)
       } catch (err) {
@@ -64,7 +66,11 @@ function App() {
         <SideBar />
         {loading ? <Spinner /> : (
           <div className="w-full">
-            <input
+            {globalStatistics && (
+
+              <GeneralInfo globalStatistics={globalStatistics} />
+            )}
+            {/* <input
               type="search"
               className="mx-auto my-5 block p-2.5 self-center text-sm text-gray-900 bg-gray-50 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               value={countrySearchVal}
@@ -74,7 +80,7 @@ function App() {
             {countries && (
               <TableOfCountries countries={data} />
             )}
-            <Pagination currentPage={currentPage} PagesLength={data.length} moveToPage={moveToPage}></Pagination>
+            <Pagination currentPage={currentPage} PagesLength={data.length} moveToPage={moveToPage}></Pagination> */}
           </div>
         )}
       </div>

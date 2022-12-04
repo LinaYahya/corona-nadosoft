@@ -1,3 +1,4 @@
+import GeneralInfo from "./GeneralInfo";
 import Pagination from "./Pagination";
 import SideBar from "./Sidebar";
 import Spinner from "./Spinner";
@@ -7,5 +8,6 @@ export {
   SideBar,
   TableOfCountries,
   Pagination,
+  GeneralInfo,
   Spinner
 }
