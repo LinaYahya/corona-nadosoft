@@ -3,28 +3,26 @@ import { Outlet } from 'react-router-dom';
 import { SideBar } from './components';
 import { getCovidSummary } from './helpers/api';
 import { IGlobalStatistics } from './interfaces';
-import { ROWS_PER_PAGE } from './helpers/constants';
 import './App.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [globalStatistics, setGlobalStatistics] = useState<null | IGlobalStatistics>(null)
-  const [totalPages, seTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
       try {
+        setError(false)
         setLoading(true)
         const { Countries, Global } = await getCovidSummary();
         setGlobalStatistics(Global);
         if (Countries) {
-
-          seTotalPages(Math.ceil(Countries.length / ROWS_PER_PAGE))
           setCountries(Countries)
         }
       } catch (err) {
-        console.log(err);
+        setError(true)
       } finally {
         setLoading(false)
       }
@@ -33,6 +31,9 @@ function App() {
   }, []);
 
 
+  if (error) { // custom component should created to render errors
+    return <div>Error happened please try again later</div>
+  }
 
   return (
     <div className="app-container">

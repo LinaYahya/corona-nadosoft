@@ -50,10 +50,16 @@ function CountriesPage() {
             onChange={handleSearch}
             placeholder="Search By Country Name"
           />
-          {countries && (
-            <TableOfCountries countries={data} setSortBase={setSortBase} />
+          {data.length ? (
+            <>
+              <TableOfCountries countries={data} setSortBase={setSortBase} />
+              <Pagination currentPage={currentPage} PagesLength={data.length} moveToPage={moveToPage}></Pagination>
+            </>
+          ) : (
+            <div>
+              No Results Match Your search
+            </div>
           )}
-          <Pagination currentPage={currentPage} PagesLength={data.length} moveToPage={moveToPage}></Pagination>
         </div>
       )}
     </>
