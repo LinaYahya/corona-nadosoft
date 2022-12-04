@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface ICountryRow {
   Country: string,
   NewConfirmed: number,
@@ -16,7 +18,8 @@ interface Country {
   Slug: string
 }
 interface ICountries {
-  countries: Array<Country>
+  countries: Array<Country>,
+  setSortBase: Dispatch<SetStateAction<'NewConfirmed' | 'NewDeaths' | 'NewRecovered' | null>>
 }
 
 
@@ -44,6 +47,12 @@ interface IGeneralInfo {
   globalStatistics: IGlobalStatistics
 }
 
+interface ISearchPageContext {
+  loading: boolean,
+  countries: Array<Country>
+}
+
+
 export type {
   ICountryRow,
   Country,
@@ -51,5 +60,6 @@ export type {
   IPage,
   IPagination,
   IGeneralInfo,
-  IGlobalStatistics
+  IGlobalStatistics,
+  ISearchPageContext
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getWorldCovidStatisticsPrevMonth } from '../../helpers/api';
 import { numberWithCommas } from '../../helpers/utils';
-import { IGeneralInfo } from '../../interfaces';
+import { Country, IGeneralInfo } from '../../interfaces';
 import { confirmedCasesOptions, deathsOptions } from './Chart';
 
 const Statistic = ({ numbers, text }: { numbers: number, text: string }) => (<div className="p-5 pl-0">
@@ -29,7 +29,7 @@ function GeneralInfo({ globalStatistics }: IGeneralInfo) {
         const newConfirmedMonthlyData: Array<number> = [];
         const newDeathsDailyData: Array<number> = [];
         if (data.length) {
-          data.forEach((element: any) => {
+          data.forEach((element: Country) => {
             newConfirmedMonthlyData.push(element.NewConfirmed)
             newDeathsDailyData.push(element.NewDeaths)
           });

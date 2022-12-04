@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useOutletContext } from 'react-router-dom';
 import { Spinner, Pagination, TableOfCountries } from '../components';
 import { ROWS_PER_PAGE } from '../helpers/constants';
+import { Country, ISearchPageContext } from '../interfaces';
 
 function CountriesPage() {
-  const { loading, countries }: any = useOutletContext();
+  const { loading, countries }: ISearchPageContext = useOutletContext();
 
   const [countrySearchVal, setCountrySearchVal] = useState("");
   const [currentPage, setCurrentPage] = useState(1)
-
+  const [sortBase, setSortBase] = useState<null | 'NewConfirmed' | 'NewDeaths' | 'NewRecovered'>(null)
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCountrySearchVal(e.target.value)
   }
@@ -19,9 +20,12 @@ function CountriesPage() {
   and the data sliced based on the pagination
   */
   let data = countries;
+  if (sortBase) {
+    data.sort((ele1: Country, ele2: Country) => ele2[sortBase] - ele1[sortBase]);
 
+  }
   if (countrySearchVal) {
-    data = countries.filter((ele: any) => {
+    data = countries.filter((ele: Country) => {
       return ele.Country.toUpperCase().startsWith(countrySearchVal.toUpperCase())
     });
   }
@@ -39,7 +43,6 @@ function CountriesPage() {
     <>
       {loading ? <Spinner /> : (
         <div className="w-full">
-
           <input
             type="search"
             className="mx-auto my-5 block p-2.5 self-center text-sm text-gray-900 bg-gray-50 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -48,7 +51,7 @@ function CountriesPage() {
             placeholder="Search By Country Name"
           />
           {countries && (
-            <TableOfCountries countries={data} />
+            <TableOfCountries countries={data} setSortBase={setSortBase} />
           )}
           <Pagination currentPage={currentPage} PagesLength={data.length} moveToPage={moveToPage}></Pagination>
         </div>
