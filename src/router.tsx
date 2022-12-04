@@ -23,11 +23,11 @@ const router = createBrowserRouter([
       //   element: <Contact />,
       // },
 
+      {
+        path: "about",
+        element: <div>About</div>,
+      },
     ]
-  },
-  {
-    path: "about",
-    element: <div>About</div>,
   },
 ]);
 

@@ -17,12 +17,14 @@ function App() {
       try {
         setLoading(true)
         const { Countries, Global } = await getCovidSummary();
-        console.log(Global);
         setGlobalStatistics(Global);
-        seTotalPages(Math.ceil(Countries.length / ROWS_PER_PAGE))
-        setCountries(Countries)
-      } catch (err) {
+        if (Countries) {
 
+          seTotalPages(Math.ceil(Countries.length / ROWS_PER_PAGE))
+          setCountries(Countries)
+        }
+      } catch (err) {
+        console.log(err);
       } finally {
         setLoading(false)
       }
