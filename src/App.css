@@ -10,8 +10,7 @@
 body{
   background-color: #f9fafb;
 }
-.container {
-  margin: 0 10%;
+.app-container {
   text-align: center;
 }
 
@@ -19,10 +18,8 @@ body{
   padding: 0 10%;
 }
 @media only screen and (max-width: 600px) {
-  .container {
-    width: 100%;
+  .app-container {
     margin: 0;
-    padding: 0 1rem;
   }
   .container-fullwidth{
     padding: 0 1rem;
@@ -31,8 +28,7 @@ body{
 
 
 @media screen and (min-width: 1400px) {
-  .container {
-    width: 1152px;
+  .app-container {
     margin: 0 auto;
   }
   .container-fullwidth{
@@ -41,8 +37,7 @@ body{
   }
 }
 @media screen and (min-width: 1600px) {
-  .container {
-    width: 1440px;
+  .app-container {
     margin: 0 auto;
   }
   .container-fullwidth{
