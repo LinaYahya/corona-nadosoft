@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/covid-19.svg';
 
 
 const SideBarRow = ({ text, path }: { text: string, path: string }) => (
-  <Link to={path} className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300">
+  <NavLink end className={({ isActive }) => {
+    return 'flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300 ' + (isActive ? 'bg-blue-200' : '')
+  }
+  } to={path} >
     <span className="ml-2 text-sm font-medium">{text}</span>
-  </Link>
+  </NavLink>
 )
 function SideBar() {
   return (
