@@ -34,10 +34,22 @@ interface IPage {
   page: number
 }
 
+interface IGlobalStatistics {
+  NewConfirmed: number,
+  TotalConfirmed: number,
+  NewDeaths: number,
+  TotalDeaths: number
+}
+interface IGeneralInfo {
+  globalStatistics: IGlobalStatistics
+}
+
 export type {
   ICountryRow,
   Country,
   ICountries,
   IPage,
-  IPagination
+  IPagination,
+  IGeneralInfo,
+  IGlobalStatistics
 }

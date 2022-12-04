@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { SideBar, TableOfCountries, Pagination, Spinner, GeneralInfo } from './components';
 import { getCovidSummary } from './helpers/api';
 import './App.css';
+import { IGlobalStatistics } from './interfaces';
 
 const ROWS_PER_PAGE = 12;
 
+
 function App() {
   const [countries, setCountries] = useState([]);
-  const [globalStatistics, setGlobalStatistics] = useState(null)
+  const [globalStatistics, setGlobalStatistics] = useState<null | IGlobalStatistics>(null)
   const [totalPages, seTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false);
