@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SideBar, TableOfCountries } from './components';
-import Pagination from './components/Pagination';
+import { SideBar, TableOfCountries, Pagination, Spinner } from './components';
 import getCovidSummary from './helpers/api';
 import './App.css';
 
@@ -10,15 +9,20 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [totalPages, seTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
       try {
+        setLoading(true)
         const { Countries } = await getCovidSummary();
         console.log(Countries);
         seTotalPages(Math.ceil(Countries.length / ROWS_PER_PAGE))
         setCountries(Countries)
       } catch (err) {
 
+      } finally {
+        setLoading(false)
       }
     }
     getData();
@@ -30,17 +34,19 @@ function App() {
     }
     setCurrentPage(page);
   }
-  
+
   return (
     <div className="app-container">
       <div className="flex flex-row items-start" >
         <SideBar />
-        <div className="w-full">
-          {countries && (
-            <TableOfCountries countries={countries.slice(((currentPage - 1) * ROWS_PER_PAGE), currentPage * ROWS_PER_PAGE)} />
-          )}
-          <Pagination currentPage={currentPage} PagesLength={totalPages} moveToPage={moveToPage}></Pagination>
-        </div>
+        {loading ? <Spinner /> : (
+          <div className="w-full">
+            {countries && (
+              <TableOfCountries countries={countries.slice(((currentPage - 1) * ROWS_PER_PAGE), currentPage * ROWS_PER_PAGE)} />
+            )}
+            <Pagination currentPage={currentPage} PagesLength={totalPages} moveToPage={moveToPage}></Pagination>
+          </div>
+        )}
       </div>
     </div>
   );
