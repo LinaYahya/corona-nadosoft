@@ -20,17 +20,19 @@ function CountriesPage() {
   and the data sliced based on the pagination
   */
   let data = countries;
+  let totalResults = countries.length;
   if (sortBase) {
     data.sort((ele1: Country, ele2: Country) => ele2[sortBase] - ele1[sortBase]);
-
+    totalResults = data.length;
   }
   if (countrySearchVal) {
     data = countries.filter((ele: Country) => {
       return ele.Country.toUpperCase().startsWith(countrySearchVal.toUpperCase())
     });
+    totalResults = data.length;
   }
   data = data.slice(((currentPage - 1) * ROWS_PER_PAGE), currentPage * ROWS_PER_PAGE);
-
+  const totalPages = Math.ceil(totalResults / ROWS_PER_PAGE)
 
   const moveToPage = (page: number) => {
     if (page > data.length || page < 1) {
@@ -53,7 +55,7 @@ function CountriesPage() {
           {data.length ? (
             <>
               <TableOfCountries countries={data} setSortBase={setSortBase} />
-              <Pagination currentPage={currentPage} PagesLength={data.length} moveToPage={moveToPage}></Pagination>
+              <Pagination currentPage={currentPage} PagesLength={totalPages} moveToPage={moveToPage}></Pagination>
             </>
           ) : (
             <div>
