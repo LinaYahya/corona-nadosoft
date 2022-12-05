@@ -3,6 +3,7 @@ import App from "./App";
 import About from "./pages/About";
 import CountriesPage from "./pages/Countries";
 import GeneralInfoPage from "./pages/GeneralInfo";
+import PageNotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -19,17 +20,14 @@ const router = createBrowserRouter([
         path: "countries",
         element: <CountriesPage />,
       },
-      // {
-      //   path: "contacts/:contactId",
-      //   element: <Contact />,
-      // },
-
       {
         path: "about",
         element: <About />,
       },
     ]
   },
+  { path: '*', element: <PageNotFound /> },
+
 ]);
 
 export default router;
